@@ -91,6 +91,11 @@ export default function FileList({
     }
   }, [files, activeTab]);
 
+  // Count all files except trash
+  const allFilesCountExceptTrash = useMemo(() => {
+    return files.filter((file) => !file.isTrash).length
+  }, [files]);
+
   // Count files in trash
   const trashCount = useMemo(() => {
     return files.filter((file) => file.isTrash).length;
@@ -230,7 +235,7 @@ export default function FileList({
       const loadingToastId = addToast({
         title: "Preparing Download",
         description: `Getting "${file.name}" ready for download...`,
-        color: "primary",
+        color: "danger",
       });
 
       // For images, we can use the ImageKit URL directly with optimized settings
@@ -390,6 +395,7 @@ export default function FileList({
         activeTab={activeTab}
         onTabChange={setActiveTab}
         files={files}
+        allFilesCountExceptTrash={allFilesCountExceptTrash}
         starredCount={starredCount}
         trashCount={trashCount}
       />
@@ -460,7 +466,7 @@ export default function FileList({
                         <div>
                           <div className="font-medium flex items-center gap-2 text-default-800">
                             <span className="truncate max-w-[150px] sm:max-w-[200px] md:max-w-[300px]">
-                              {file.name}
+                              {file.name.length > 8 ?  `${file.name.slice(0, 8)}...` : file.name}
                             </span>
                             {file.isStarred && (
                               <Tooltip content="Starred">
@@ -468,16 +474,6 @@ export default function FileList({
                                   className="h-4 w-4 text-yellow-400"
                                   fill="currentColor"
                                 />
-                              </Tooltip>
-                            )}
-                            {file.isFolder && (
-                              <Tooltip content="Folder">
-                                <Folder className="h-3 w-3 text-default-400" />
-                              </Tooltip>
-                            )}
-                            {file.type.startsWith("image/") && (
-                              <Tooltip content="Click to view image">
-                                <ExternalLink className="h-3 w-3 text-default-400" />
                               </Tooltip>
                             )}
                           </div>
@@ -491,7 +487,7 @@ export default function FileList({
                     </TableCell>
                     <TableCell className="hidden sm:table-cell">
                       <div className="text-xs text-default-500">
-                        {file.isFolder ? "Folder" : file.type}
+                        {file.isFolder ? "Folder" : file.type.split("/")[0]}
                       </div>
                     </TableCell>
                     <TableCell className="hidden md:table-cell">

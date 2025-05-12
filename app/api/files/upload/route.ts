@@ -5,6 +5,7 @@ import { files } from "@/lib/db/schema";
 import { eq, and } from "drizzle-orm";
 import ImageKit from "imagekit";
 import { v4 as uuidv4 } from "uuid";
+import { log } from "console";
 
 // Initialize ImageKit with your credentials
 const imagekit = new ImageKit({
@@ -15,9 +16,27 @@ const imagekit = new ImageKit({
 
 export async function POST(request: NextRequest) {
   try {
+
+
     const { userId } = await auth();
     if (!userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const data = await db
+      .select()
+      .from(files)
+      .where(
+        and(
+          eq(files.userId, userId),
+          eq(files.isFolder, false),
+        )
+      );
+    console.log("data")
+    console.log(data)
+
+    if (data.length >= 10) {
+      return NextResponse.json({ error: "File upload limit reached!" }, { status: 400 });
     }
 
     const formData = await request.formData();
@@ -70,10 +89,12 @@ export async function POST(request: NextRequest) {
     const fileExtension = originalFilename.split(".").pop() || "";
     const uniqueFilename = `${uuidv4()}.${fileExtension}`;
 
+
     // Create folder path based on parent folder if exists
     const folderPath = parentId
-      ? `/droply/${userId}/folders/${parentId}`
-      : `/droply/${userId}`;
+      ? `/cloudDrop/${userId}/folders/${parentId}`
+      : `/cloudDrop/${userId}`;
+
 
     const uploadResponse = await imagekit.upload({
       file: fileBuffer,
@@ -81,6 +102,8 @@ export async function POST(request: NextRequest) {
       folder: folderPath,
       useUniqueFileName: false,
     });
+
+
 
     const fileData = {
       name: originalFilename,

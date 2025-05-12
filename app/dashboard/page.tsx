@@ -44,11 +44,11 @@ export default async function Dashboard() {
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center gap-2 mb-4 md:mb-0">
-              <CloudUpload className="h-5 w-5 text-primary" />
-              <h2 className="text-lg font-bold">Droply</h2>
+              <CloudUpload className="h-5 w-5 text-danger" />
+              <h2 className="text-lg font-bold">CloudDrop</h2>
             </div>
             <p className="text-default-500 text-sm">
-              &copy; {new Date().getFullYear()} Droply
+              &copy; {new Date().getFullYear()} CloudDrop
             </p>
           </div>
         </div>
@@ -56,3 +56,17 @@ export default async function Dashboard() {
     </div>
   );
 }
+
+/**
+
+ * 
+ * folder path
+ * onclick item
+ * delete 
+ * trash
+ * downlaod
+ * 
+ *  
+ * change UI
+ * 
+ */

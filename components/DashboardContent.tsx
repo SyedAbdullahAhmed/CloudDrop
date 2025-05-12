@@ -47,7 +47,7 @@ export default function DashboardContent({
       <div className="mb-8">
         <h2 className="text-4xl font-bold text-default-900">
           Hi,{" "}
-          <span className="text-primary">
+          <span className="text-danger">
             {userName?.length > 10
               ? `${userName?.substring(0, 10)}...`
               : userName?.split(" ")[0] || "there"}
@@ -61,14 +61,14 @@ export default function DashboardContent({
 
       <Tabs
         aria-label="Dashboard Tabs"
-        color="primary"
+        color="danger"
         variant="underlined"
         selectedKey={activeTab}
         onSelectionChange={(key) => setActiveTab(key as string)}
         classNames={{
           tabList: "gap-6",
           tab: "py-3",
-          cursor: "bg-primary",
+          cursor: "bg-danger",
         }}
       >
         <Tab
@@ -84,7 +84,7 @@ export default function DashboardContent({
             <div className="lg:col-span-1">
               <Card className="border border-default-200 bg-default-50 shadow-sm hover:shadow-md transition-shadow">
                 <CardHeader className="flex gap-3">
-                  <FileUp className="h-5 w-5 text-primary" />
+                  <FileUp className="h-5 w-5 text-danger" />
                   <h2 className="text-xl font-semibold">Upload</h2>
                 </CardHeader>
                 <CardBody>
@@ -100,7 +100,7 @@ export default function DashboardContent({
             <div className="lg:col-span-2">
               <Card className="border border-default-200 bg-default-50 shadow-sm hover:shadow-md transition-shadow">
                 <CardHeader className="flex gap-3">
-                  <FileText className="h-5 w-5 text-primary" />
+                  <FileText className="h-5 w-5 text-danger" />
                   <h2 className="text-xl font-semibold">Your Files</h2>
                 </CardHeader>
                 <CardBody>

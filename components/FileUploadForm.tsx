@@ -20,7 +20,7 @@ import {
   ModalBody,
   ModalFooter,
 } from "@heroui/modal";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 interface FileUploadFormProps {
   userId: string;
@@ -129,12 +129,12 @@ export default function FileUploadForm({
       if (onUploadSuccess) {
         onUploadSuccess();
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error uploading file:", error);
-      setError("Failed to upload file. Please try again.");
+      setError(error.response.data.error || "Failed to upload file. Please try again.");
       addToast({
         title: "Upload Failed",
-        description: "We couldn't upload your file. Please try again.",
+        description: error.response.data.error || "We couldn't upload your file. Please try again.",
         color: "danger",
       });
     } finally {
@@ -192,7 +192,7 @@ export default function FileUploadForm({
       {/* Action buttons */}
       <div className="flex gap-2 mb-2">
         <Button
-          color="primary"
+          color="danger"
           variant="flat"
           startContent={<FolderPlus className="h-4 w-4" />}
           onClick={() => setFolderModalOpen(true)}
@@ -201,10 +201,20 @@ export default function FileUploadForm({
           New Folder
         </Button>
         <Button
-          color="primary"
+          color="danger"
           variant="flat"
           startContent={<FileUp className="h-4 w-4" />}
-          onClick={() => fileInputRef.current?.click()}
+          onClick={() => {
+            if(fileInputRef.current === null) {
+              addToast({
+                title: "Max Upload Reached!",
+                description: "Upload 1 file at a time",
+                color: "danger",
+              });
+              return
+            }
+            fileInputRef.current?.click()
+          }}
           className="flex-1"
         >
           Add Image
@@ -215,24 +225,23 @@ export default function FileUploadForm({
       <div
         onDrop={handleDrop}
         onDragOver={handleDragOver}
-        className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
-          error
+        className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${error
+          ? "border-danger/30 bg-danger/5"
+          : file
             ? "border-danger/30 bg-danger/5"
-            : file
-              ? "border-primary/30 bg-primary/5"
-              : "border-default-300 hover:border-primary/5"
-        }`}
+            : "border-default-300 hover:border-danger/5"
+          }`}
       >
         {!file ? (
           <div className="space-y-3">
-            <FileUp className="h-12 w-12 mx-auto text-primary/70" />
+            <FileUp className="h-12 w-12 mx-auto text-danger/70" />
             <div>
               <p className="text-default-600">
                 Drag and drop your image here, or{" "}
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="text-primary cursor-pointer font-medium inline bg-transparent border-0 p-0 m-0"
+                  className="text-danger cursor-pointer font-medium inline bg-transparent border-0 p-0 m-0"
                 >
                   browse
                 </button>
@@ -251,8 +260,8 @@ export default function FileUploadForm({
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <div className="p-2 bg-primary/10 rounded-md">
-                  <FileUp className="h-5 w-5 text-primary" />
+                <div className="p-2 bg-danger/10 rounded-md">
+                  <FileUp className="h-5 w-5 text-danger" />
                 </div>
                 <div className="text-left">
                   <p className="text-sm font-medium truncate max-w-[180px]">
@@ -288,7 +297,7 @@ export default function FileUploadForm({
             {uploading && (
               <Progress
                 value={progress}
-                color="primary"
+                color="danger"
                 size="sm"
                 showValueLabel={true}
                 className="max-w-full"
@@ -296,7 +305,7 @@ export default function FileUploadForm({
             )}
 
             <Button
-              color="primary"
+              color="danger"
               startContent={<Upload className="h-4 w-4" />}
               endContent={!uploading && <ArrowRight className="h-4 w-4" />}
               onClick={handleUpload}
@@ -333,7 +342,7 @@ export default function FileUploadForm({
       >
         <ModalContent>
           <ModalHeader className="flex gap-2 items-center">
-            <FolderPlus className="h-5 w-5 text-primary" />
+            <FolderPlus className="h-5 w-5 text-danger" />
             <span>New Folder</span>
           </ModalHeader>
           <ModalBody>
@@ -360,7 +369,7 @@ export default function FileUploadForm({
               Cancel
             </Button>
             <Button
-              color="primary"
+              color="danger"
               onClick={handleCreateFolder}
               isLoading={creatingFolder}
               isDisabled={!folderName.trim()}

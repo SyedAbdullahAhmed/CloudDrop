@@ -3,6 +3,15 @@ import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Providers } from "./providers";
 import "../styles/globals.css";
+import { CloudUpload } from "lucide-react";
+
+import { Poppins } from 'next/font/google';
+
+const poppins = Poppins({
+  variable: "--font-poppins",
+  weight: ['300','400', '500', '600', '700'],
+  subsets: ["latin"],
+});
 
 const inter = Inter({
   subsets: ["latin"],
@@ -10,8 +19,12 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Droply",
+  title: "Cloud Drop",
   description: "Secure cloud storage for your images, powered by ImageKit",
+  icons: {
+    icon: '/cloud-upload-svgrepo-com.svg', // The icon to be displayed on the Chrome tab
+    shortcut: '/cloud-upload-svgrepo-com.svg',
+  },
 };
 
 export default function RootLayout({
@@ -23,7 +36,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" className="dark">
         <body
-          className={`${inter.variable} antialiased bg-background text-foreground`}
+          className={`${inter.variable} ${poppins.variable} antialiased bg-background text-foreground`}
         >
           <Providers>{children}</Providers>
         </body>

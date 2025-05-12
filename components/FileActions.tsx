@@ -28,6 +28,7 @@ export default function FileActions({
           size="sm"
           onClick={() => onDownload(file)}
           className="min-w-0 px-2"
+          color="primary"
           startContent={<Download className="h-4 w-4" />}
         >
           <span className="hidden sm:inline">Download</span>
@@ -41,6 +42,7 @@ export default function FileActions({
           size="sm"
           onClick={() => onStar(file.id)}
           className="min-w-0 px-2"
+          color="warning"
           startContent={
             <Star
               className={`h-4 w-4 ${
@@ -63,7 +65,7 @@ export default function FileActions({
         size="sm"
         onClick={() => onTrash(file.id)}
         className="min-w-0 px-2"
-        color={file.isTrash ? "success" : "default"}
+        color={file.isTrash ? "success" : "danger"}
         startContent={
           file.isTrash ? (
             <ArrowUpFromLine className="h-4 w-4" />

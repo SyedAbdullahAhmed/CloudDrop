@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { signUpSchema } from "@/schemas/signUpSchema";
 
+
 export default function SignUpForm() {
   const router = useRouter();
   const { signUp, isLoaded, setActive } = useSignUp();
@@ -48,19 +49,24 @@ export default function SignUpForm() {
   });
 
   const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
+
+    console.log(data)
     if (!isLoaded) return;
 
     setIsSubmitting(true);
     setAuthError(null);
 
     try {
-      await signUp.create({
+      const res = await signUp.create({
         emailAddress: data.email,
         password: data.password,
       });
+      console.log("Sign-up successful!")
+      console.log(res.status)
 
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
       setVerifying(true);
+      console.log("Sign-up successful!")
     } catch (error: any) {
       console.error("Sign-up error:", error);
       setAuthError(
@@ -149,7 +155,7 @@ export default function SignUpForm() {
 
             <Button
               type="submit"
-              color="primary"
+              color="danger"
               className="w-full"
               isLoading={isSubmitting}
             >
@@ -168,7 +174,7 @@ export default function SignUpForm() {
                     });
                   }
                 }}
-                className="text-primary hover:underline font-medium"
+                className="text-danger hover:underline font-medium"
               >
                 Resend code
               </button>
@@ -182,7 +188,7 @@ export default function SignUpForm() {
   return (
     <Card className="w-full max-w-md border border-default-200 bg-default-50 shadow-xl">
       <CardHeader className="flex flex-col gap-1 items-center pb-2">
-        <h1 className="text-2xl font-bold text-default-900">
+        <h1 className="text-2xl font-bold text-default-900 ">
           Create Your Account
         </h1>
         <p className="text-default-500 text-center">
@@ -237,7 +243,7 @@ export default function SignUpForm() {
                   isIconOnly
                   variant="light"
                   size="sm"
-                  onClick={() => setShowPassword(!showPassword)}
+                  onPress={() => setShowPassword(!showPassword)}
                   type="button"
                 >
                   {showPassword ? (
@@ -271,7 +277,7 @@ export default function SignUpForm() {
                   isIconOnly
                   variant="light"
                   size="sm"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  onPress={() => setShowConfirmPassword(!showConfirmPassword)}
                   type="button"
                 >
                   {showConfirmPassword ? (
@@ -290,7 +296,7 @@ export default function SignUpForm() {
 
           <div className="space-y-4">
             <div className="flex items-start gap-2">
-              <CheckCircle className="h-5 w-5 text-primary mt-0.5" />
+              <CheckCircle className="h-5 w-5 text-danger mt-0.5" />
               <p className="text-sm text-default-600">
                 By signing up, you agree to our Terms of Service and Privacy
                 Policy
@@ -300,7 +306,7 @@ export default function SignUpForm() {
 
           <Button
             type="submit"
-            color="primary"
+            color="danger"
             className="w-full"
             isLoading={isSubmitting}
           >
@@ -316,7 +322,7 @@ export default function SignUpForm() {
           Already have an account?{" "}
           <Link
             href="/sign-in"
-            className="text-primary hover:underline font-medium"
+            className="text-danger hover:underline font-medium"
           >
             Sign in
           </Link>

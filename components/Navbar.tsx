@@ -135,8 +135,8 @@ export default function Navbar({ user }: NavbarProps) {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 z-10">
-            <CloudUpload className="h-6 w-6 text-primary" />
-            <h1 className="text-xl font-bold">Droply</h1>
+            <CloudUpload className="h-6 w-6 text-danger" />
+            <h1 className="text-xl font-bold">CloudDrop</h1>
           </Link>
 
           {/* Desktop Navigation */}
@@ -144,12 +144,12 @@ export default function Navbar({ user }: NavbarProps) {
             {/* Show these buttons when user is signed out */}
             <SignedOut>
               <Link href="/sign-in">
-                <Button variant="flat" color="primary">
+                <Button variant="flat" color="danger">
                   Sign In
                 </Button>
               </Link>
               <Link href="/sign-up">
-                <Button variant="solid" color="primary">
+                <Button variant="solid" color="danger">
                   Sign Up
                 </Button>
               </Link>
@@ -160,7 +160,7 @@ export default function Navbar({ user }: NavbarProps) {
               <div className="flex items-center gap-4">
                 {!isOnDashboard && (
                   <Link href="/dashboard">
-                    <Button variant="flat" color="primary">
+                    <Button variant="flat" color="danger">
                       Dashboard
                     </Button>
                   </Link>
@@ -264,7 +264,7 @@ export default function Navbar({ user }: NavbarProps) {
                   className="w-full"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <Button variant="flat" color="primary" className="w-full">
+                  <Button variant="flat" color="danger" className="w-full">
                     Sign In
                   </Button>
                 </Link>
@@ -273,7 +273,7 @@ export default function Navbar({ user }: NavbarProps) {
                   className="w-full"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <Button variant="solid" color="primary" className="w-full">
+                  <Button variant="solid" color="danger" className="w-full">
                     Sign Up
                   </Button>
                 </Link>

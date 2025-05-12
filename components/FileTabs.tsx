@@ -4,6 +4,7 @@ import { File, Star, Trash } from "lucide-react";
 import { Tabs, Tab } from "@heroui/tabs";
 import Badge from "@/components/ui/Badge";
 import type { File as FileType } from "@/lib/db/schema";
+import { PgNumericBuilder } from "drizzle-orm/pg-core";
 
 interface FileTabsProps {
   activeTab: string;
@@ -11,6 +12,7 @@ interface FileTabsProps {
   files: FileType[];
   starredCount: number;
   trashCount: number;
+  allFilesCountExceptTrash: number;
 }
 
 export default function FileTabs({
@@ -19,18 +21,19 @@ export default function FileTabs({
   files,
   starredCount,
   trashCount,
+  allFilesCountExceptTrash
 }: FileTabsProps) {
   return (
     <Tabs
       selectedKey={activeTab}
       onSelectionChange={(key) => onTabChange(key as string)}
-      color="primary"
+      color="danger"
       variant="underlined"
       classNames={{
         base: "w-full overflow-x-auto",
         tabList: "gap-2 sm:gap-4 md:gap-6 flex-nowrap min-w-full",
         tab: "py-3 whitespace-nowrap",
-        cursor: "bg-primary",
+        cursor: "bg-danger",
       }}
     >
       <Tab
@@ -45,7 +48,7 @@ export default function FileTabs({
               size="sm"
               aria-label={`${files.filter((file) => !file.isTrash).length} files`}
             >
-              {files.filter((file) => !file.isTrash).length}
+              {allFilesCountExceptTrash}
             </Badge>
           </div>
         }

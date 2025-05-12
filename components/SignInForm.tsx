@@ -140,7 +140,7 @@ export default function SignInForm() {
 
           <Button
             type="submit"
-            color="primary"
+            color="danger"
             className="w-full"
             isLoading={isSubmitting}
           >
@@ -156,7 +156,7 @@ export default function SignInForm() {
           Don't have an account?{" "}
           <Link
             href="/sign-up"
-            className="text-primary hover:underline font-medium"
+            className="text-danger hover:underline font-medium"
           >
             Sign up
           </Link>

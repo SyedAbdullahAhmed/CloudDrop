@@ -40,6 +40,9 @@ export async function POST(request: NextRequest) {
           )
         );
 
+        console.log("parent folder")
+        console.log(parentFolder)
+
       if (!parentFolder) {
         return NextResponse.json(
           { error: "Parent folder not found" },
@@ -64,7 +67,13 @@ export async function POST(request: NextRequest) {
       isTrash: false,
     };
 
+    console.log("folderData")
+    console.log(folderData)
+
     const [newFolder] = await db.insert(files).values(folderData).returning();
+    console.log("new folder")
+    console.log(newFolder)
+
 
     return NextResponse.json({
       success: true,

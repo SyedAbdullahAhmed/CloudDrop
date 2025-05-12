@@ -1,4 +1,6 @@
-# Droply
+![UI](./UI.png)
+
+# 
 
 A simple file storage application built with Next.js, Clerk, Neon, Drizzle, and HeroUI.
 
@@ -31,8 +33,8 @@ A simple file storage application built with Next.js, Clerk, Neon, Drizzle, and 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/droply.git
-   cd droply
+   git clone https://github.com/SyedAbdullahAhmed/cloud-drop.git
+   cd cloud-drop
    ```
 
 2. Install dependencies:
@@ -93,23 +95,17 @@ A simple file storage application built with Next.js, Clerk, Neon, Drizzle, and 
 
 2. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-### Building for Production
-
-1. Build the application:
+3. Run the drizzle schema migration to Neon DB:
 
    ```bash
-   npm run build
-   # or
-   yarn build
-   # or
-   pnpm build
+    npm run db:push
+    npm run db:generate
+    # sql browser client 
+    npm run db:studio
+    # if you want to migrate the database or create a new schema
+    npm run db:migrate
    ```
 
-2. Start the production server:
-   ```bash
-   npm start
-   # or
-   yarn start
-   # or
-   pnpm start
-   ```
+
+
+
