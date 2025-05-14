@@ -217,7 +217,7 @@ export default function FileUploadForm({
           }}
           className="flex-1"
         >
-          Add Image
+          Add File
         </Button>
       </div>
 
@@ -237,7 +237,7 @@ export default function FileUploadForm({
             <FileUp className="h-12 w-12 mx-auto text-danger/70" />
             <div>
               <p className="text-default-600">
-                Drag and drop your image here, or{" "}
+                Drag and drop your docs here here, or{" "}
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}

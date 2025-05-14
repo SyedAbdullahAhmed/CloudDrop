@@ -74,10 +74,15 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    const allowedExtensions = [".py", ".js", ".txt", ".jsx", ".tsx", ".ts", ".doc", ".docx"];
+    const fileName = file.name.toLowerCase();
+
+    const hasValidExtension = allowedExtensions.some(text => fileName.endsWith(text));
+
     // Only allow image uploads
-    if (!file.type.startsWith("image/") && file.type !== "application/pdf") {
+    if (!file.type.startsWith("image/") && file.type !== "application/pdf" && !hasValidExtension) {
       return NextResponse.json(
-        { error: "Only image files are supported" },
+        { error: "Only image, pdf, docx, text files supported!" },
         { status: 400 }
       );
     }
