@@ -313,7 +313,7 @@ export default function FileUploadForm({
               className="w-full"
               isDisabled={!!error}
             >
-              {uploading ? `Uploading... ${progress}%` : "Upload Image"}
+              {uploading ? `Uploading... ${progress}%` : "Upload Document"}
             </Button>
           </div>
         )}

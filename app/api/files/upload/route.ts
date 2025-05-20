@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const allowedExtensions = [".py", ".js", ".txt", ".jsx", ".tsx", ".ts", ".doc", ".docx"];
+    const allowedExtensions = [".py", ".js", ".txt", ".jsx", ".tsx", ".ts", ".doc", ".docx",".doe"];
     const fileName = file.name.toLowerCase();
 
     const hasValidExtension = allowedExtensions.some(text => fileName.endsWith(text));
